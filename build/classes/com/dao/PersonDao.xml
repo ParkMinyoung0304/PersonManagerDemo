@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.PersonDao">
+  <select id="findAll" resultType="com.po.Person">
+    select * from person
+  </select>
+  <insert id="addPerson" parameterType="com.po.Person" >
+    insert into person(uid,name,idcard,phone,sex,email,classname,leadername,typename,access_permission) 
+      values(#{uid},#{name},#{idcard},#{phone},#{sex},#{email},#{classname},#{leadername},#{typename},#{access_permission});
+     insert into admin(username,password,hr_permission) 
+      values(#{uid},'123456','0')
+  </insert>
+  <delete id="delPerson" parameterType="integer">
+     delete from person where uid = #{uid};
+     delete from admin where username = #{uid};
+  </delete>
+  <select id="findById" parameterType="String" resultType="com.po.Person">
+     select * from person where uid = #{uid}
+  </select>
+  <update id="updatePerson" parameterType="com.po.Person">
+     update person set name = #{name},
+        idcard = #{idcard},phone = #{phone} ,sex = #{sex},email = #{email},
+        classname = #{classname},leadername = #{leadername} ,typename = #{typename} ,access_permission=#{access_permission}
+        where uid = #{uid}
+  </update>
+</mapper>
